@@ -1,1 +1,77 @@
-<!DOCTYPE html><html lang="en"><head>    <meta charset="UTF-8">    <title>Random Music Note & Number</title>    <style>        body {font-family:Arial,sans-serif;margin:2rem;}        .result {margin-top:1rem;font-size:1.2rem;}        button {padding:.5rem 1rem;font-size:1rem;}    </style></head><body><h1>Random Music Note & Number Generator</h1><button id="generateBtn">Generate</button><div class="result" id="output"></div><script>    // ---------- Helpers ----------    function randomChoice(arr){        return arr[Math.floor(Math.random()*arr.length)];    }    // Random note (A‑G, optional sharp)    function getRandomNote(){        const notes = ['A','B','C','D','E','F','G'];        const includeSharp = Math.random() < 0.4;   // ~40 % chance        let note = randomChoice(notes);        if (includeSharp && note !== 'E' && note !== 'B'){            note += '#';        }        return note;    }    // Random integer 1‑5    function getRandomNumber(){        return Math.floor(Math.random()*5) + 1;    }    // ---------- Main logic ----------    function generate(){        const note   = getRandomNote();        const number = getRandomNumber();        document.getElementById('output').innerHTML =            `<strong>Music note:</strong> ${note}<br>`+            `<strong>Number (1‑5):</strong> ${number}`;    }    // Click handler    const btn = document.getElementById('generateBtn');    btn.addEventListener('click', generate);    // ----- Space‑bar support -----    // Listen for keydown on the whole document.    // When the pressed key is " " (space) we prevent the default scrolling    // behavior and invoke the same generate() function.    document.addEventListener('keydown', function(e){        // e.code === 'Space' works across browsers; also check e.key for safety.        if (e.code === 'Space' || e.key === ' ') {            e.preventDefault();      // stop page from scrolling            generate();        }    });    // Generate an initial result when the page loads    generate();</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Minor pentatonic scale</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+        }
+
+        .result {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+        }
+
+        button {
+            padding: .5rem 1rem;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Random minor pentatonic scale</h1>
+
+<button id="generateBtn">Get a random scale (or press the spacebar)</button>
+
+<div class="result" id="output"></div>
+
+<script>
+    // ---------- Helpers ----------
+    function randomChoice(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function getRandomMinorChord() {
+        const notes = ['Am', 'A#m', 'Bm', 'Cm', 'C#m', 'Dm', 'D#m', 'Em', 'Fm', 'F#m', 'Gm', 'G#m'];
+
+        return randomChoice(notes);
+    }
+
+    function getRandomPentatonicScaleNumber() {
+        return randomChoice(['1', '2', '3', '4', '5']);
+    }
+
+    // ---------- Main logic ----------
+    function generate() {
+        const minorChord = getRandomMinorChord();
+        const pentatonicScaleNumber = getRandomPentatonicScaleNumber();
+        document.getElementById('output').innerHTML =
+            `<strong>Chord:</strong> ${minorChord}<br>` +
+            `<strong>Scale:</strong> ${pentatonicScaleNumber}`;
+    }
+
+    // Click handler
+    const btn = document.getElementById('generateBtn');
+    btn.addEventListener('click', generate);
+
+    // ----- Space‑bar support -----
+    // Listen for keydown on the whole document.
+    // When the pressed key is " " (space) we prevent the default scrolling
+    // behavior and invoke the same generate() function.
+    document.addEventListener('keydown', function (e) {
+        // e.code === 'Space' works across browsers; also check e.key for safety.
+        if (e.code === 'Space' || e.key === ' ') {
+            e.preventDefault();      // stop page from scrolling
+            generate();
+        }
+    });
+
+    // Generate an initial result when the page loads
+    generate();
+</script>
+
+</body>
+</html>
